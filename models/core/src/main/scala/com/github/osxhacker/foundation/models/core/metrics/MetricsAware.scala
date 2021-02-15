@@ -1,0 +1,69 @@
+/**
+ * MIT License
+ * 
+ * Copyright (c) 2021 osxhacker
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
+package com.github.osxhacker.foundation.models.core.metrics
+
+import scala.concurrent.ExecutionContext
+
+import nl.grons.metrics4.scala._
+
+import scalaz.{
+	Failure => _,
+	Name => _,
+	Success => _,
+	_
+	}
+
+import com.github.osxhacker.foundation.models.core.error.ApplicationError
+import com.github.osxhacker.foundation.models.core.functional._
+
+
+/**
+ * The '''MetricsAware''' type defines functionality relevate to types which
+ * can produce operational metrics, such as execution timing, call counts, and
+ * object counts.
+ *
+ * @author osxhacker
+ */
+trait MetricsAware
+	extends DefaultInstrumented
+{
+	/// Class Imports
+
+
+	/// Class Types
+
+
+	/// Instance Properties
+	
+
+	def measure (symbolicName : Symbol) : ServiceMethodMetrics =
+		new ServiceMethodMetrics (
+			symbolicName.name,
+			metrics.counter (symbolicName.name, "calls"),
+			metrics.counter (symbolicName.name, "errors"),
+			metrics.timer (symbolicName.name, "execution")
+			)
+}
+

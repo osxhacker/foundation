@@ -1,0 +1,73 @@
+/**
+ * MIT License
+ * 
+ * Copyright (c) 2021 osxhacker
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
+package com.github.osxhacker.foundation.models.security
+
+import scalaz.{
+	Failure => _,
+	Sink => _,
+	Source => _,
+	Success => _,
+	_
+	}
+
+import com.github.osxhacker.foundation.models.core.net.URI
+
+
+/**
+ * =Overview=
+ *
+ * The '''password''' `package` defines types related to pass phrases supported
+ * by the system.  This includes both "one-way" secure hashing-based
+ * definitions as well as
+ * [[com.github.osxhacker.foundation.models.security.password.SystemPassword]]s used by
+ * components to provide to external services.
+ *
+ * @author osxhacker
+ *
+ */
+package object password
+{
+	/// Class Imports
+
+
+	/// Class Types
+	/**
+	 * The '''StorageIndicator''' trait defines a "marker type" used to
+	 * disambiguate storage-specific
+	 * [[com.github.osxhacker.foundation.models.core.net.URI]]s from "logical" ones.
+	 *
+	 * @author osxhacker
+	 *
+	 */
+	sealed trait StorageIndicator
+
+
+	object StorageIndicator
+	{
+		@inline
+		def apply (location : URI) : URI @@ StorageIndicator =
+			Tag[URI, StorageIndicator] (location);
+	}
+}

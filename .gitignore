@@ -1,2 +1,30 @@
+# Known temporary files
+.DS_Store
+*~
 *.class
 *.log
+*.out
+
+# Eclispe/Scala-IDE generated artifacts
+.scala_dependencies
+.cache
+.cache-main
+.cache-tests
+.classpath
+.project
+.settings/
+.target
+.worksheet
+bin/
+gen
+
+# SBT generated artifacts
+dist/
+lib_managed/
+project/boot/
+src_managed/
+target/
+
+# Akka persistent actor artifacts
+**/snapshots/
+

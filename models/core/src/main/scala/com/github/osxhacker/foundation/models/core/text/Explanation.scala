@@ -1,0 +1,68 @@
+/**
+ * MIT License
+ * 
+ * Copyright (c) 2021 osxhacker
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
+
+package com.github.osxhacker.foundation.models.core.text
+
+import scalaz.{
+	Failure => _,
+	Sink => _,
+	Source => _,
+	Success => _,
+	_
+	}
+
+import com.github.osxhacker.foundation.models.core.Identifier
+import com.github.osxhacker.foundation.models.core.error.ApplicationError
+import com.github.osxhacker.foundation.models.core.net.Scheme
+
+/**
+ * The '''Explanation''' type defines the Domain Object Model reification of
+ * providing context to an expected non-fatal error produced by the system.
+ *
+ * @author osxhacker
+ *
+ */
+final case class Explanation (val id : Identifier)
+
+
+object Explanation
+{
+	/// Instance Properties
+	implicit val scheme : Scheme[Explanation] = Scheme ("explanation");
+
+
+	/**
+	 * This apply method allows for functional-style creation of an
+	 * '''Explanation''' built from name-specific-scheme, '''nss''', content.
+	 */
+	def apply (nss : String) : ApplicationError \/ Explanation =
+		Identifier (scheme, nss) map (id => new Explanation (id));
+
+
+	/// Implicit Conversions
+	implicit val ExplanationEqual : Equal[Explanation] = Equal.equalA;
+
+	implicit val ExplanationShow : Show[Explanation] = Show.showFromToString;
+}
+
